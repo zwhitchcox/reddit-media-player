@@ -40,11 +40,19 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+           <span class="sr-only">Toggle navigation</span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+         </button>
         <a class="navbar-brand" href="#/">Reddit Media Player</a>
       </div>
-      <ul class="nav navbar-nav navbar-left">
-      <li><a>Omit Already Played: <input ng-model="omitRedundancies" type="checkbox" name="my-checkbox" checked></a></li>
-      </ul>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+        <li><a>Omit Played: <input ng-model="omitRedundancies" type="checkbox" name="my-checkbox" checked></a></li>
+        </ul>
+      </div>
     </div><!--/.container-fluid -->
   </nav>
 </header>

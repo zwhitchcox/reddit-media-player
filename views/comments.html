@@ -1,1 +1,14 @@
-comments
+<h1>{{sub}}</h1>
+<div class="list-group">
+  <a
+</div>
+<div ng-repeat="title in titles track by $index">
+  <p ng-class="title.titleClass">
+  <span ng-click="getComments(title.data.id)" class="title">
+  <b>{{title.data.title}}</b>
+  </span>
+  <br>
+  <a target=_blank ng-href="http://reddit.com/{{title.data.permalink}}">permalink</a>
+  </p>
+  <br>
+</div>

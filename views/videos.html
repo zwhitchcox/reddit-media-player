@@ -1,6 +1,5 @@
-<h1>Reddit Videos</h1>
+<h1>{{sub}}</h1>
 <div id="player"></div>
-<h4>Permalinks</h4>
-<div ng-repeat="permalink in permalinks">
-  <a target=_blank ng-href="https://reddit.com/{{permalink.uri}}">{{permalink.title}}</a>
+<div class="list-group">
+  <a class="list-group-item" target=_blank ng-href="https://reddit.com/{{curPermalink.uri}}">{{curPermalink.title}}</a>
 </div>
