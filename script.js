@@ -8,7 +8,7 @@ app.config(['$routeProvider',
     }).
     when('/vid/:sub', {
       templateUrl: 'views/videos.html',
-      controller: 'MusicCtrl'
+      controller: 'VideosCtrl'
     }).
     when('/txt/:sub', {
       templateUrl: 'views/text.html',
