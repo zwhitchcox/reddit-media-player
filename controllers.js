@@ -94,6 +94,13 @@ app.controller('VideosCtrl', ['$scope', '$http', '$routeParams',
   }])
 app.controller('Ctrl', ['$scope', '$http', '$routeParams',
   function($scope, $http, $routeParams) {
+    $scope.subs = {
+      videos: [
+        'Videos',
+        'Music',
+        'ListenToThis'
+      ]
+    }
     $("[name='my-checkbox']").bootstrapSwitch({
       size:'mini'
     })
