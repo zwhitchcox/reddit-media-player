@@ -19,6 +19,7 @@ app.controller('VideosCtrl', ['$scope', '$http', '$routeParams',
       return result;
     }
     $scope.omitRedundancies = true
+
     $scope.getVids = function() {
       $http.jsonp('http://www.reddit.com/r/'+$routeParams.sub+'.json?limit=100&jsonp=JSON_CALLBACK')
         .success(function(res) {
@@ -44,7 +45,6 @@ app.controller('VideosCtrl', ['$scope', '$http', '$routeParams',
           $scope.play(0)
         })
     }
-    $scope.custsub = 'videos'
     $scope.$watch('omitRedundancies',$scope.getVids())
     $scope.getVids()
     $scope.play = function() {
@@ -83,6 +83,13 @@ app.controller('VideosCtrl', ['$scope', '$http', '$routeParams',
           localStorage["ids"] = JSON.stringify(ids);
         }
       }
+      $("[name='my-checkbox']").bootstrapSwitch({
+        size:'mini'
+      })
+      .on('switchChange.bootstrapSwitch', function(event, state) {
+        $scope.$apply($scope.getVids())
+        $scope.$apply($scope.omitRedundancies = state)
+      })
     }
   }])
 app.controller('Ctrl', ['$scope', '$http', '$routeParams',
