@@ -139,8 +139,8 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
       else if (cur.type ==='yt') {
         $('#stage').append("<div id='ytplayer'></div>")
         player = new YT.Player('ytplayer', {
-          height: window.innerWidth * 0.609375 * .9,
-          width: window.innerWidth * .9,
+          height: window.innerWidth * 0.609375 * .7,
+          width: window.innerWidth * .7,
           videoId: $scope.media[$scope.curIdx].ytid,
           events: {
             'onReady': onPlayerReady,
@@ -184,4 +184,3 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
       }
     }
   }])
-  
