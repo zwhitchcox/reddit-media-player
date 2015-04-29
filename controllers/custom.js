@@ -2,7 +2,6 @@
 app.controller('CustomCtrl', ['$scope', '$http', '$routeParams', 'Menu',
   function($scope, $http, $routeParams, Menu) {
     $scope.save = function () {
-      console.log($scope.sub)
       var subs;
       if (localStorage['custsubs'] === null || localStorage['custsubs'] === undefined || localStorage['custsubs'] === "") {
         subs = [];

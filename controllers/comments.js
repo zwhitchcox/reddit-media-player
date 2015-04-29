@@ -1,18 +1,36 @@
-'use strict';
-app.controller('CommentsCtrl', ['$scope', '$http', '$routeParams', 'Menu',
+'use strict'
+
+(app.controller('CommentsCtrl', ['$scope', '$http', '$routeParams', 'Menu',
   function($scope, $http, $routeParams, Menu) {
+    window.globalStop = false
+    Menu.sub = $routeParams.sub
     $scope.sub = $routeParams.sub
-    $scope.getTitles = function(sub) {
-      $http.jsonp('http://www.reddit.com/r/'+$scope.sub+'.json?limit=100&jsonp=JSON_CALLBACK')
-        .success(function(res) {
-          $scope.titles = res.data.children
-        })
-    }
-    $scope.getTitles()
-    $scope.continuous = true
+    $scope.first = true
+
+    $scope.sub = $routeParams.sub
+    $http.jsonp('http://www.reddit.com/r/'+$scope.sub+'.json?limit=100&jsonp=JSON_CALLBACK')
+      .success(function(res) {
+        var ids = getIDsFromStorage($scope.sub)
+        $scope.titles = res.data.children.reduce(function(prev,cur) {
+          if (!~ids.indexOf(cur.data.id)) {
+            prev.push(cur)
+          }
+          return prev
+        },[])
+      })
     $scope.played = []
     $scope.curPlay = 0
     $scope.getComments = function (post) {
+      // dumb-ios
+      // if ($scope.first) {
+      //   var u = new SpeechSynthesisUtterance('txt')
+      //   u.volume = 0
+      //   window.speechSynthesis.speak(u)
+      //   $scope.first = false
+      //   return
+      // }
+      addIDToStorage(post,$scope.sub)
+
       $http.jsonp('http://www.reddit.com/comments/'+post+'.json?jsonp=JSON_CALLBACK')
         .success(function(res) {
           $scope.comments = flattenCommentTree(res[1])
@@ -25,10 +43,7 @@ app.controller('CommentsCtrl', ['$scope', '$http', '$routeParams', 'Menu',
       commentTree.data.children.forEach(function(comment) {
         if (comment.data.hasOwnProperty('body')) {
           arr.push(comment.data.body)
-          if (comment.data.replies !== "" &&
-          comment.data.replies
-          .data.children[0]
-          .data.hasOwnProperty('body')) {
+          if (comment.data.replies !== "" && comment.data.replies.data.children[0].data.hasOwnProperty('body')) {
             arr = arr.concat(flattenCommentTree(comment.data.replies))
           }
         }
@@ -55,16 +70,12 @@ app.controller('CommentsCtrl', ['$scope', '$http', '$routeParams', 'Menu',
         var comment = $scope.comments[curIdx]
           .replace(/\b(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?\b/g,'link')
         if (window.speechSynthesis !== undefined) {
-          if ($scope.continuous) {
-            nativetts(comment,function(){
-              setTimeout(function(){
-                $scope.read(curIdx+1,false,curPlay)
-                $scope.$apply()
-              },1000)
-              })
-          } else {
-            nativetts(comment)
-          }
+          nativetts(comment,function(){
+            setTimeout(function(){
+              $scope.read(curIdx+1,false,curPlay)
+              $scope.$apply()
+            },1000)
+            })
 
         } else {
           if (window['aud'+$scope.curPlay] !== undefined) {
@@ -80,6 +91,7 @@ app.controller('CommentsCtrl', ['$scope', '$http', '$routeParams', 'Menu',
 
       }
     }
+
     $scope.stop = function() {
       $scope.stopped = true
       ++$scope.curPlayed
@@ -95,9 +107,7 @@ app.controller('CommentsCtrl', ['$scope', '$http', '$routeParams', 'Menu',
         ]
     }
     $scope.updateMenu()
-    $scope.getLink = function(idx) {
-      return 'http://reddit.com'+$scope.titles[idx].data.permalink
-    }
 
 
-  }])
+
+  }]))(window.angular)

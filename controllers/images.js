@@ -4,9 +4,10 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu',
     $scope.sub = $routeParams.sub
     $http.jsonp('http://www.reddit.com/r/'+$scope.sub+'.json?limit=100&jsonp=JSON_CALLBACK')
       .success(function(res) {
-        var ids = getIDsFromStorage()
+        var ids = getIDsFromStorage($scope.sub)
         var fileTypes = [".jpg", ".jpeg", ".bmp", ".gif", ".png"]
         $scope.imgs = res.data.children.reduce(function(prev,cur) {
+          var origl = prev.length
           if (!~ids.indexOf(cur.data.id)) {
             if (cur.data.domain === 'imgur.com') {
               var hash = cur.data.url.substr(cur.data.url.indexOf('/',8)+1)
@@ -24,7 +25,10 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu',
               perm: 'http://reddit.com'+cur.data.permalink,
               id: cur.data.id
             })
-            } else if (cur.data.url.substr(cur.data.url.length-5)==='.gifv'){
+            } else if (
+              cur.data.url.substr(cur.data.url.length-5)==='.gifv' ||
+              cur.data.url.substr(cur.data.url.length-5)==='.webm'
+              ){
               prev.push({
                 type:'webm',
                 mp4uri:cur.data.url.replace('gifv','mp4'),

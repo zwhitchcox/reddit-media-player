@@ -2,6 +2,7 @@
 
 app.controller('TextCtrl', ['$scope', '$http', '$routeParams', 'Menu',
   function($scope, $http, $routeParams, Menu) {
+    window.globalStop = false
     Menu.sub = $routeParams.sub
     $scope.sub = $routeParams.sub
     $http.jsonp('http://www.reddit.com/r/' + $scope.sub + '.json?limit=100&jsonp=JSON_CALLBACK')
@@ -27,6 +28,7 @@ app.controller('TextCtrl', ['$scope', '$http', '$routeParams', 'Menu',
         }
       }
       if (!$scope.stopped) {
+        nativetts('hello world',function(){})
 
 
         if ($scope.played.some(function(cur) {return cur === curIdx}) ||
@@ -36,10 +38,9 @@ app.controller('TextCtrl', ['$scope', '$http', '$routeParams', 'Menu',
           $scope.played.push(curIdx)
         }
 
+
         // add id to local storage
         addIDToStorage($scope.txt[curIdx].data.id,$routeParams.sub)
-
-
         $scope.txt[curIdx].txtClass="text-warning"
         var txt = $scope.txt[curIdx].data.title + ". " + $scope.txt[curIdx].data.selftext
         txt = txt.replace(/(https?:\/\/[^\s]+)/g,'link')
@@ -73,6 +74,7 @@ app.controller('TextCtrl', ['$scope', '$http', '$routeParams', 'Menu',
         window.aud.pause()
       }
     }
+
     $scope.updateMenu = function() {
       Menu.btns =  [
           {btnName: 'stop', fn: $scope.stop}
