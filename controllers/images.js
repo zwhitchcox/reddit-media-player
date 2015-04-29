@@ -25,10 +25,10 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu',
               id: cur.data.id
             })
             } else if (cur.data.url.substr(cur.data.url.length-5)==='.gifv'){
-              console.log(cur.data.url)
               prev.push({
                 type:'webm',
-                uri:cur.data.url.replace('gifv','webm'),
+                mp4uri:cur.data.url.replace('gifv','mp4'),
+                webmuri:cur.data.url.replace('gifv','webm'),
                 title:cur.data.title,
                 perm: 'http://reddit.com'+cur.data.permalink,
                 id: cur.data.id
@@ -57,7 +57,10 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu',
         document.getElementsByTagName('iframe')[0].style.zIndex= -1000
         $('#gallery').css('margin-left','-20px')
       } else if (cur.type === 'webm') {
-        $('#gallery').html('<video width="'+window.innerWidth*.9+'"controls><source src="' + cur.uri+'" type="video/webm">Your browser does not support HTML5 video.</video>')
+        $('#gallery').html(
+          '<video autoplay="true" onclick="goToNext()" loop="true" webkit-playsinline src="'+cur.mp4uri+'" width="'+window.innerWidth*.85+'">'+
+          '<source src="'+cur.webmuri+'" type="video/webm">'+
+          '<source src="'+cur.mp4uri+'" type="video/mp4"></video>')
       }
 
     }
@@ -79,3 +82,7 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu',
       }
     }
   }])
+function goToNext() {
+  var scope = angular.element($("#gallery")).scope()
+  scope.$apply(scope.next())
+}

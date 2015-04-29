@@ -30,7 +30,7 @@
   <!-- load bootstrap and fontawesome via CDN -->
   <!-- load bootstrap and fontawesome via CDN -->
   <link rel="stylesheet" href="lib/bootstrap-3.3.4-dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="lib/style.css" />
+  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="lib/font-awesome.css" />
   <link rel="stylesheet" href="lib/bootstrap-switch.min.css" />
   <!-- SPELLS -->
@@ -87,13 +87,16 @@
 <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- Reddit Media Player -->
 <div class="ad">
-<ins class="adsbygoogle"
+<ins id="ad" class="adsbygoogle"
      style="display:inline-block;width:728px;height:90px"
      data-ad-client="ca-pub-5931961133736315"
      data-ad-slot="2492276257"></ins>
 </div>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
+$('#ad').css('width', (window.innerWidth/2)+'px')
+$('#ad').css('height', (window.innerWidth/2*0.12362637362)+'px')
+
 </script>
 </body>
 </html>
