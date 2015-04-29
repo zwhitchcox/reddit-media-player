@@ -1,6 +1,6 @@
 <h1>{{sub}}</h1>
 <h3><a target=_blank ng-href="{{imgs[curIdx].perm}}">{{imgs[curIdx].title}}</a></h3>
-<div id="gallery"></div>
+<div id="gallery" ng-swipe-left="next()" ng-swipe-right="prev()"></div>
 <br><br><br>
 <style>
 h3 a {
