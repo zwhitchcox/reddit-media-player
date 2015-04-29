@@ -13,6 +13,16 @@ app.controller('Ctrl', ['$scope', '$http', '$routeParams', 'Menu',
       Menu.YouTubeOnly = !Menu.YouTubeOnly
       fn()
     }
+    function getSubsFromStorage() {
+      var subs;
+      if (localStorage['custsubs'] === null || localStorage['custsubs'] === undefined || localStorage['custsubs'] === "") {
+        subs = [];
+      } else {
+        subs = JSON.parse(localStorage["custsubs"]);
+      }
+      return subs
+    }
+    $scope.custsubs = getSubsFromStorage()
     $scope.subs = {
       audvid: [
         'Videos',
