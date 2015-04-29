@@ -54,9 +54,9 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu',
       } else if (cur.type==='imgur-embed') {
         $('#gallery').html('<blockquote class="imgur-embed-pub" lang="en" data-id="'
         +cur.hash+'"></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>')
-        $('#gallery').css('margin-left','-20px')
+        $('#gallery').css('margin-left','-17px')
       } else if (cur.type === 'webm') {
-        $('#gallery').html('<video controls><source src="' + cur.uri+'" type="video/webm">Your browser does not support HTML5 video.</video>')
+        $('#gallery').html('<video width="'+window.innerWidth*.9+'"controls><source src="' + cur.uri+'" type="video/webm">Your browser does not support HTML5 video.</video>')
       }
 
     }
