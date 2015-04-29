@@ -7,7 +7,7 @@ app.controller('Ctrl', ['$scope', '$http', '$routeParams', 'Menu',
     $scope.menu.YouTubeOnly =  false
     $scope.menu.txtBtns = []
     $scope.clearCache = function() {
-      localStorage['ids'] = ""
+      localStorage[Menu.sub+'ids'] = ""
     }
     $scope.ytonly = function(fn) {
       Menu.YouTubeOnly = !Menu.YouTubeOnly
@@ -77,24 +77,24 @@ function nativetts(txt,cb) {
   })
 
 }
-function getIDsFromStorage() {
+function getIDsFromStorage(sub) {
   var ids;
-  if (localStorage['ids'] === null || localStorage['ids'] === undefined || localStorage['ids'] === "") {
+  if (localStorage[sub+'ids'] === null || localStorage[sub+'ids'] === undefined || localStorage[sub+'ids'] === "") {
     ids = [];
   } else {
-    ids = JSON.parse(localStorage["ids"]);
+    ids = JSON.parse(localStorage[sub+"ids"]);
   }
   return ids
 }
-function addIDToStorage (id) {
+function addIDToStorage (id,sub) {
   var ids;
-  if (localStorage['ids'] === null || localStorage['ids'] === undefined || localStorage['ids'] === "") {
+  if (localStorage[sub+'ids'] === null || localStorage[sub+'ids'] === undefined || localStorage[sub+'ids'] === "") {
     ids = [];
   } else {
-    ids = JSON.parse(localStorage["ids"]);
+    ids = JSON.parse(localStorage[sub+"ids"]);
   }
   if (!~ids.indexOf(id)) {
     ids.push(id)
-    localStorage["ids"] = JSON.stringify(ids);
+    localStorage[sub+"ids"] = JSON.stringify(ids);
   }
 }

@@ -2,16 +2,12 @@
 
 app.controller('TextCtrl', ['$scope', '$http', '$routeParams', 'Menu',
   function($scope, $http, $routeParams, Menu) {
+    Menu.sub = $routeParams.sub
     $scope.sub = $routeParams.sub
     $http.jsonp('http://www.reddit.com/r/' + $scope.sub + '.json?limit=100&jsonp=JSON_CALLBACK')
       .success(function(res) {
+        var ids = getIDsFromStorage($routeParams.sub)
         $scope.txt = res.data.children.reduce(function(prev,cur) {
-          var ids;
-          if (localStorage['ids'] === null || localStorage['ids'] === undefined || localStorage['ids'] === "") {
-            ids = [];
-          } else {
-            ids = JSON.parse(localStorage["ids"]);
-          }
           if (!~ids.indexOf(cur.data.id)) {
             prev.push(cur)
           }
@@ -41,7 +37,7 @@ app.controller('TextCtrl', ['$scope', '$http', '$routeParams', 'Menu',
         }
 
         // add id to local storage
-        addIDToStorage($scope.txt[curIdx].data.id)
+        addIDToStorage($scope.txt[curIdx].data.id,$routeParams.sub)
 
 
         $scope.txt[curIdx].txtClass="text-warning"

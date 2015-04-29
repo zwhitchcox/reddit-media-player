@@ -1,5 +1,6 @@
 app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
   function($scope, $http, $routeParams, Menu) {
+    Menu.sub = $routeParams.sub
     $scope.updateMenu = function() {
       Menu.btns =  [
           {btnName: 'forward', fn: $scope.next}
@@ -24,13 +25,10 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
       $http.jsonp('http://www.reddit.com/r/'+$routeParams.sub+'.json?limit=100&jsonp=JSON_CALLBACK')
         .success(function(res) {
           $scope.permalinks = {}
+          var ids = getIDsFromStorage($routeParams.sub)
           $scope.queried = res.data.children.reduce(function(prev,cur) {
             if (cur.data.domain === 'soundcloud.com') {
-              if (localStorage['ids'] === null || localStorage['ids'] === undefined || localStorage['ids'] === "") {
-                ids = [];
-              } else {
-                ids = JSON.parse(localStorage["ids"]);
-              }
+
               if (!~ids.indexOf(cur.data.id) || !$scope.omitRedundancies) {
                 prev.push({
                   scuri: cur.data.url,
@@ -42,21 +40,10 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
               }
             } else if (/^https?:\/\/(www\.)?youtube/.test(cur.data.url)) {
               var type = 'yt';
-              var ids;
-              if (localStorage['ids'] === null || localStorage['ids'] === undefined || localStorage['ids'] === "") {
-                ids = [];
-              } else {
-                ids = JSON.parse(localStorage["ids"]);
-              }
               if (!~ids.indexOf(cur.data.id) || !$scope.omitRedundancies) {
                 prev.push({type: type, id: cur.data.id, title:cur.data.title, uri:cur.data.permalink,ytid: getJsonFromUrl(cur.data.url.substr(cur.data.url.indexOf('?',8)+1)).v})
               }
             } else if (/^https?:\/\/(www\.)?vimeo/.test(cur.data.url)) {
-              if (localStorage['ids'] === null || localStorage['ids'] === undefined || localStorage['ids'] === "") {
-                ids = [];
-              } else {
-                ids = JSON.parse(localStorage["ids"]);
-              }
               if (!~ids.indexOf(cur.data.id) || !$scope.omitRedundancies) {
                 prev.push({
                   viuri: cur.data.url.substr(cur.data.url.indexOf('/',8)+1),
@@ -93,7 +80,7 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
         $scope.curIdx = playIdx
       }
       var cur = $scope.media[$scope.curIdx]
-      addIDToStorage(cur.id)
+      addIDToStorage(cur.id,$routeParams.sub)
       // soundcloud
       if (cur.type === 'sc') {
         $http.jsonp('http://soundcloud.com/oembed?format=js&url='+

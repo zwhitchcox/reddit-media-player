@@ -1,10 +1,11 @@
 'use strict';
 app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu',
   function($scope, $http, $routeParams, Menu) {
+    Menu.sub = $routeParams.sub
     $scope.sub = $routeParams.sub
     $http.jsonp('http://www.reddit.com/r/'+$scope.sub+'.json?limit=100&jsonp=JSON_CALLBACK')
       .success(function(res) {
-        var ids = getIDsFromStorage()
+        var ids = getIDsFromStorage($routeParams.sub)
         var fileTypes = [".jpg", ".jpeg", ".bmp", ".gif", ".png"]
         $scope.imgs = res.data.children.reduce(function(prev,cur) {
           if (!~ids.indexOf(cur.data.id)) {
@@ -47,7 +48,7 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu',
       }
       $('#gallery').css('margin-left','0')
       var cur = $scope.imgs[$scope.curIdx]
-      addIDToStorage(cur.id)
+      addIDToStorage(cur.id,$routeParams.sub)
       if (cur.type === 'img') {
         $('#gallery').html('<img id="curimg" src="'+cur.uri+'">')
         $('#curimg').css('max-width',window.innerWidth*.9)
