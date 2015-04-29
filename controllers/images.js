@@ -45,6 +45,7 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu',
       } else {
         $scope.curIdx = idx
       }
+      $('#gallery').css('margin-left','0')
       var cur = $scope.imgs[$scope.curIdx]
       addIDToStorage(cur.id)
       if (cur.type === 'img') {
@@ -53,6 +54,7 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu',
       } else if (cur.type==='imgur-embed') {
         $('#gallery').html('<blockquote class="imgur-embed-pub" lang="en" data-id="'
         +cur.hash+'"></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>')
+        $('#gallery').css('margin-left','-20px')
       } else if (cur.type === 'webm') {
         $('#gallery').html('<video controls><source src="' + cur.uri+'" type="video/webm">Your browser does not support HTML5 video.</video>')
       }
