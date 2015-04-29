@@ -1,11 +1,11 @@
 <div class="list-group">
-  <a ng-repeat="sub in subs.videos" ng-href="#/vid/{{sub}}" class="list-group-item col-md-4 col-xs-6">
+  <a ng-repeat="sub in subs.audvid" ng-href="#/audvid/{{sub}}" class="list-group-item col-md-4 col-xs-6">
   {{sub}}
   </a>
-  <a ng-repeat="sub in subs.comments" ng-href="#/vid/{{sub}}" class="list-group-item col-md-4 col-xs-6">
+  <a ng-repeat="sub in subs.comments" ng-href="#/com/{{sub}}" class="list-group-item col-md-4 col-xs-6">
   {{sub}}
   </a>
-  <a ng-repeat="sub in subs.text" ng-href="#/vid/{{sub}}" class="list-group-item col-md-4 col-xs-6">
+  <a ng-repeat="sub in subs.text" ng-href="#/txt/{{sub}}" class="list-group-item col-md-4 col-xs-6">
   {{sub}}
   </a>
   <a href="#/cust" class="list-group-item col-md-4 col-xs-6">Custom</a>

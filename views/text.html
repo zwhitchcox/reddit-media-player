@@ -1,1 +1,23 @@
-text
+<h1>{{sub}}</h1>
+<div ng-repeat="text in txt track by $index">
+  <p ng-class="text.txtClass">
+  <a ng-click="read($index,true)" class="btn btn-default btn-main link">
+  <b>{{text.data.title}}</b>
+  <br>
+  {{text.data.selftext}}
+  </a>
+  <a class="btn btn-info btn-perm" target=_blank ng-href="http://reddit.com{{joke.data.permalink}}">permalink</a>
+  </p>
+
+  <br>
+</div>
+<style>
+.btn-main {
+  white-space:normal;
+  text-align:left;
+  width:80%;
+}
+.btn-perm {
+  width:100px;
+}
+</style>

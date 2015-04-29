@@ -1,0 +1,10 @@
+<h1>{{sub}}</h1>
+<div id="stage"></div>
+<p>
+  {{media[curIdx].title}}
+  <a target=_blank ng-href="https://reddit.com/{{media[curIdx].uri}}">permalink</a>
+</p>
+<div class="list-group">
+  <!-- permalink ng-href="https://reddit.com/{{curPermalink.uri}}" -->
+  <a ng-repeat="item in media track by $index" class="list-group-item link" ng-click="play($index)" target=_blank >{{item.title}}</a>
+</div>
