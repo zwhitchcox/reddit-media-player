@@ -20,7 +20,7 @@
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+})(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-41646350-9', 'auto');
   ga('send', 'pageview');
@@ -28,23 +28,25 @@
   </script>
   <!-- SCROLLS -->
   <!-- load bootstrap and fontawesome via CDN -->
-  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" />
+  <!-- load bootstrap and fontawesome via CDN -->
+  <link rel="stylesheet" href="lib/bootstrap-3.3.4-dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="lib/style.css" />
+  <link rel="stylesheet" href="lib/font-awesome.css" />
+  <link rel="stylesheet" href="lib/bootstrap-switch.min.css" />
   <!-- SPELLS -->
   <!-- load angular and angular route via CDN -->
-  <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0-rc.0/angular.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0-rc.0/angular-sanitize.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-touch.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
-  <script src="//www.youtube.com/iframe_api"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.14/angular-ui-router.min.js"></script>
-  <script src="//w.soundcloud.com/player/api.js"></script>
-  <script src="//f.vimeocdn.com/js/froogaloop2.min.js"></script>
+  <script src="lib/jquery-2.1.3.min.js"></script>
+  <script src="lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+  <script src="lib/angular.min.js"></script>
+  <script src="lib/angular-route.js"></script>
+  <script src="lib/angular-sanitize.js"></script>
+  <script src="lib/angular-touch.min.js"></script>
+  <script src="lib/bootstrap-switch.min.js"></script>
+  <script src="lib/iframe_api"></script>
+  <script src="lib/angular-ui-router.min.js"></script>
+  <script src="lib/api.js"></script>
+  <script src="lib/froogaloop2.min.js"></script>
+  <script src="lib/froogaloop2.min.js"></script>
   <script src="script.js"></script>
   <script src="controllers.js"></script>
   <script src="controllers/text.js"></script>
@@ -82,7 +84,7 @@
 <div class="container" style="margin-top:70px;margin-bottom:140px;">
   <div ng-view></div>
 </div>
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- Reddit Media Player -->
 <div class="ad">
 <ins class="adsbygoogle"
