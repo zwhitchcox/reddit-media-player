@@ -1,7 +1,11 @@
 'use strict';
 app.controller('Ctrl', ['$scope', '$http', '$routeParams', 'Menu',
   function($scope, $http, $routeParams, Menu) {
+
     $scope.menu = Menu
+    $scope.menu.btns =[]
+    $scope.menu.YouTubeOnly =  false
+    $scope.menu.txtBtns = []
     $scope.clearCache = function() {
       localStorage['ids'] = ""
     }
@@ -22,6 +26,10 @@ app.controller('Ctrl', ['$scope', '$http', '$routeParams', 'Menu',
       text: [
         'Jokes',
         'TIFU'
+      ],
+      images: [
+        'funny',
+        'diy'
       ]
     }
     $("[name='my-checkbox']").bootstrapSwitch({
@@ -33,29 +41,50 @@ app.controller('Ctrl', ['$scope', '$http', '$routeParams', 'Menu',
   }])
 
 
-  var chunkLength = 150;
-  var pattRegex = new RegExp('^[\\s\\S]{' + Math.floor(chunkLength / 2) + ',' + chunkLength + '}[.!?,]{1}|^[\\s\\S]{1,' + chunkLength + '}$|^[\\s\\S]{1,' + chunkLength + '} ');
-  var u = new SpeechSynthesisUtterance()
-  u.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Alex'; })[0];
+var chunkLength = 150;
+var pattRegex = new RegExp('^[\\s\\S]{' + Math.floor(chunkLength / 2) + ',' + chunkLength + '}[.!?,]{1}|^[\\s\\S]{1,' + chunkLength + '}$|^[\\s\\S]{1,' + chunkLength + '} ');
+var u = new SpeechSynthesisUtterance()
+u.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Alex'; })[0];
 
-  function apitts(txt,cb) {
-    if (window.aud !== undefined && window.aud !== null) {window.aud.pause()}
-    window.aud = new Audio("http://tts-api.com/tts.mp3?q=" + encodeURIComponent(txt))
-    window.aud.play()
-    window.aud.addEventListener('ended',cb, false)
+function apitts(txt,cb) {
+  if (window.aud !== undefined && window.aud !== null) {window.aud.pause()}
+  window.aud = new Audio("http://tts-api.com/tts.mp3?q=" + encodeURIComponent(txt))
+  window.aud.play()
+  window.aud.addEventListener('ended',cb, false)
+}
+function nativetts(txt,cb) {
+  var arr = [];
+  var element = this;
+  while (txt.length > 0) {
+      arr.push(txt.match(pattRegex)[0]);
+      txt = txt.substring(arr[arr.length - 1].length);
   }
-  function nativetts(txt,cb) {
-    var arr = [];
-    var element = this;
-    while (txt.length > 0) {
-        arr.push(txt.match(pattRegex)[0]);
-        txt = txt.substring(arr[arr.length - 1].length);
-    }
-    $.each(arr, function () {
-        var u = new SpeechSynthesisUtterance(this.trim())
-        u.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Alex'; })[0];
-        window.speechSynthesis.speak(u)
-        u.onend = cb
-    })
+  $.each(arr, function () {
+      var u = new SpeechSynthesisUtterance(this.trim())
+      u.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Alex'; })[0];
+      window.speechSynthesis.speak(u)
+      u.onend = cb
+  })
 
+}
+function getIDsFromStorage() {
+  var ids;
+  if (localStorage['ids'] === null || localStorage['ids'] === undefined || localStorage['ids'] === "") {
+    ids = [];
+  } else {
+    ids = JSON.parse(localStorage["ids"]);
   }
+  return ids
+}
+function addIDToStorage (id) {
+  var ids;
+  if (localStorage['ids'] === null || localStorage['ids'] === undefined || localStorage['ids'] === "") {
+    ids = [];
+  } else {
+    ids = JSON.parse(localStorage["ids"]);
+  }
+  if (!~ids.indexOf(id)) {
+    ids.push(id)
+    localStorage["ids"] = JSON.stringify(ids);
+  }
+}

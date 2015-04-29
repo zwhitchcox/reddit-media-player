@@ -9,15 +9,6 @@ app.controller('CommentsCtrl', ['$scope', '$http', '$routeParams', 'Menu',
         })
     }
     $scope.getTitles()
-
-    if (typeof(Storage) != "undefined") {
-      if (localStorage.getItem("firstTime") === null) {
-        $scope.firstTime = true
-        localStorage.setItem("firstTime", false);
-      } else {
-        $scope.firstTime = false
-      }
-    }
     $scope.continuous = true
     $scope.played = []
     $scope.curPlay = 0
@@ -105,7 +96,7 @@ app.controller('CommentsCtrl', ['$scope', '$http', '$routeParams', 'Menu',
     }
     $scope.updateMenu()
     $scope.getLink = function(idx) {
-      return 'http://reddit.com/'+$scope.titles[idx].data.permalink
+      return 'http://reddit.com'+$scope.titles[idx].data.permalink
     }
 
 

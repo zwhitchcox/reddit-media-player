@@ -18,6 +18,10 @@ app.config(['$routeProvider',
       templateUrl: 'views/comments.html',
       controller: 'CommentsCtrl'
     }).
+    when('/img/:sub', {
+      templateUrl: 'views/images.html',
+      controller: 'ImagesCtrl'
+    }).
     when('/cust', {
       templateUrl: 'views/custom.html',
       controller: 'CustomCtrl'

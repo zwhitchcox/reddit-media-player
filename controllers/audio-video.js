@@ -184,15 +184,4 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
       }
     }
   }])
-  function addIDToStorage (id) {
-    var ids;
-    if (localStorage['ids'] === null || localStorage['ids'] === undefined || localStorage['ids'] === "") {
-      ids = [];
-    } else {
-      ids = JSON.parse(localStorage["ids"]);
-    }
-    if (!~ids.indexOf(id)) {
-      ids.push(id)
-      localStorage["ids"] = JSON.stringify(ids);
-    }
-  }
+  
