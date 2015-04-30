@@ -58,9 +58,7 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compi
       } else {
         $scope.curIdx = idx
       }
-      console.log('hello')
       var cur = $scope.imgs[$scope.curIdx]
-      console.log(cur.id)
       addIDToStorage(cur.id, $scope.sub)
       if (cur.type === 'img') {
         $('#gallery').html('<img id="curimg" src="'+cur.uri+'">')
