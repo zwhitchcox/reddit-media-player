@@ -1,6 +1,8 @@
 app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
   function($scope, $http, $routeParams, Menu) {
     Menu.sub = $routeParams.sub
+    document.addEventListener("pause", function() {window.location = '/'}, false);
+
     $scope.updateMenu = function() {
       Menu.btns =  [
           {btnName: 'forward', fn: $scope.next}
