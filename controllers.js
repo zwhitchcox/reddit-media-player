@@ -67,7 +67,6 @@ function apitts(txt,cb) {
   window.aud.addEventListener('ended',cb, false)
 }
 function nativetts(txt,cb) {
-  alert('called')
   var chunkLength = 150;
   var pattRegex = new RegExp('^[\\s\\S]{' + Math.floor(chunkLength / 2) + ',' + chunkLength + '}[.!?,]{1}|^[\\s\\S]{1,' + chunkLength + '}$|^[\\s\\S]{1,' + chunkLength + '} ');
 
