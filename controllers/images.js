@@ -58,7 +58,7 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compi
       }
       $('#gallery').css('margin-left','0')
       var cur = $scope.imgs[$scope.curIdx]
-      addIDToStorage(cur.id)
+      addIDToStorage(cur.id, $scope.sub)
       if (cur.type === 'img') {
         $('#gallery').html('<img id="curimg" src="'+cur.uri+'">')
         $('#curimg').css('max-width',window.innerWidth*.9)

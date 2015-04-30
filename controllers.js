@@ -47,7 +47,8 @@ app.controller('Ctrl', ['$scope', '$http', '$routeParams', 'Menu',
       images: [
         'Funny',
         'Gifs',
-        'Pics'
+        'Pics',
+        'WTF'
       ]
     }
     $("[name='my-checkbox']").bootstrapSwitch({
