@@ -48,11 +48,9 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compi
           }
           return prev
         },[])
-        console.log('hello')
         $scope.play(0)
       })
     $scope.play = function(idx) {
-      console.log('play')
       if (idx === undefined) {
         $scope.curIdx++
       } else {
