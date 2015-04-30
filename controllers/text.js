@@ -28,7 +28,6 @@ app.controller('TextCtrl', ['$scope', '$http', '$routeParams', 'Menu',
         }
       }
       if (!$scope.stopped) {
-        nativetts('hello world',function(){})
 
 
         if ($scope.played.some(function(cur) {return cur === curIdx}) ||
@@ -55,12 +54,7 @@ app.controller('TextCtrl', ['$scope', '$http', '$routeParams', 'Menu',
           if (window['aud'+$scope.curPlay] !== undefined) {
             window['aud'+$scope.curPlay].pause()
           }
-          if ($scope.continuous) {
             apitts(txt,function(){setTimeout(function(){$scope.read(curIdx+1,false,curPlay);$scope.$apply()},1000)})
-          } else {
-            apitts(txt)
-          }
-
         }
 
       }

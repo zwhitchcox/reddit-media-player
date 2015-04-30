@@ -5,7 +5,10 @@ app.controller('Ctrl', ['$scope', '$http', '$routeParams', 'Menu',
     if (window.speechSynthesis !== undefined) {
       window.speechSynthesis.cancel()
     } else {
-      window.aud.pause()
+      if (window.aud !== undefined) {
+        window.aud.pause()
+      }
+
     }
     $scope.menu = Menu
     $scope.menu.btns =[]
@@ -56,18 +59,18 @@ app.controller('Ctrl', ['$scope', '$http', '$routeParams', 'Menu',
   }])
 
 
-var chunkLength = 150;
-var pattRegex = new RegExp('^[\\s\\S]{' + Math.floor(chunkLength / 2) + ',' + chunkLength + '}[.!?,]{1}|^[\\s\\S]{1,' + chunkLength + '}$|^[\\s\\S]{1,' + chunkLength + '} ');
-var u = new SpeechSynthesisUtterance()
-u.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Alex'; })[0];
 
 function apitts(txt,cb) {
   if (window.aud !== undefined && window.aud !== null) {window.aud.pause()}
-  window.aud = new Audio("http://tts-api.com/tts.mp3?q=" + encodeURIComponent(txt))
+  window.aud = new Audio("http://tts-api.com/tts.mp3?r=10&q=" + encodeURIComponent(txt))
   window.aud.play()
   window.aud.addEventListener('ended',cb, false)
 }
 function nativetts(txt,cb) {
+  alert('called')
+  var chunkLength = 150;
+  var pattRegex = new RegExp('^[\\s\\S]{' + Math.floor(chunkLength / 2) + ',' + chunkLength + '}[.!?,]{1}|^[\\s\\S]{1,' + chunkLength + '}$|^[\\s\\S]{1,' + chunkLength + '} ');
+
   if (window.globalStop) {
     return
   }

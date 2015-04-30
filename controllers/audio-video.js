@@ -103,7 +103,7 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
       else if (cur.type === 'vi') {
         $scope.next = function() {$scope.play()}
         $scope.updateMenu()
-        var html = '<iframe id="vimeo_player" src="//player.vimeo.com/video/'+cur.viuri+'?autoplay=1&api=1&player_id=vimeo_player" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
+        var html = '<iframe id="vimeo_player" src="http://player.vimeo.com/video/'+cur.viuri+'?autoplay=1&api=1&player_id=vimeo_player" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
         $('#stage').append(html)
         var iframe = $('#vimeo_player')[0];
         var player = $f(iframe);
@@ -124,20 +124,6 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
       }
       // youtube
       else if (cur.type ==='yt') {
-        $('#stage').append("<div id='ytplayer'></div>")
-        player = new YT.Player('ytplayer', {
-          height: window.innerWidth * 0.609375 * .7,
-          width: window.innerWidth * .7,
-          videoId: $scope.media[$scope.curIdx].ytid,
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange,
-          }
-        })
-        window.onresize = function() {
-          player.setSize(window.innerWidth * .9,window.innerWidth * 0.609375 * .9)
-        }
-
         $scope.next = function(id,event) {
           if (id !== undefined) {
             if ($scope.playedNext !== id) {
@@ -154,7 +140,6 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
               $scope.play()
           }
         }
-        $scope.updateMenu()
         function onPlayerReady(event) {
           event.target.playVideo()
         }
@@ -167,6 +152,24 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
           }
           catch (e) {console.log(e)}
         }
+        $('#stage').append("<div id='ytplayer'></div>")
+        player = new YT.Player('ytplayer', {
+          height: window.innerWidth * 0.609375 * .7,
+          width: window.innerWidth * .7,
+          videoId: $scope.media[$scope.curIdx].ytid,
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange,
+            'onError': $scope.next
+          }
+        })
+        window.onresize = function() {
+          player.setSize(window.innerWidth * .9,window.innerWidth * 0.609375 * .9)
+        }
+
+
+        $scope.updateMenu()
+
 
       }
     }

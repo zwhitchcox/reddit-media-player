@@ -81,12 +81,7 @@
           if (window['aud'+$scope.curPlay] !== undefined) {
             window['aud'+$scope.curPlay].pause()
           }
-          if ($scope.continuous) {
             apitts(comment,function(){setTimeout(function(){$scope.read(curIdx+1,false,curPlay);$scope.$apply()},1000)})
-          } else {
-            apitts(comment)
-          }
-
         }
 
       }

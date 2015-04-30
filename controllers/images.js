@@ -59,7 +59,6 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu',
         $('#gallery').html('<blockquote class="imgur-embed-pub" lang="en" data-id="'
         +cur.hash+'"></blockquote><script async src="http://s.imgur.com/min/embed.js" charset="utf-8"></script>')
         document.getElementsByTagName('iframe')[0].style.zIndex= -1000
-        $('#gallery').css('margin-left','-20px')
       } else if (cur.type === 'webm') {
         $('#gallery').html(
           '<video autoplay="true" onclick="goToNext()" loop="true" webkit-playsinline src="'+cur.mp4uri+'" width="'+window.innerWidth*.85+'">'+
