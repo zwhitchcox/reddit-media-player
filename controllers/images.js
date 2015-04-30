@@ -1,9 +1,16 @@
-'use strict';
-app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu',
-  function($scope, $http, $routeParams, Menu) {
+'use strict'
+
+app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compile',
+  function($scope, $http, $routeParams, Menu, $compile) {
     $scope.sub = $routeParams.sub
     $http.jsonp('http://www.reddit.com/r/'+$scope.sub+'.json?limit=100&jsonp=JSON_CALLBACK')
       .success(function(res) {
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+          $('#fixer').append($compile('<div style="position:fixed;height:10000px;width:2000px;top:400px;left:0px;" ng-swipe-right="prev()" ng-swipe-left="next()"></div>')($scope))
+          $scope.instructions = 'swipe to advance'
+        } else {
+          $scope.instructions = 'Use \'space\' to advance'
+        }
         var ids = getIDsFromStorage($scope.sub)
         var fileTypes = [".jpg", ".jpeg", ".bmp", ".gif", ".png"]
         $scope.imgs = res.data.children.reduce(function(prev,cur) {

@@ -1,10 +1,10 @@
 <h1>{{sub}}</h1>
 <h3><a target=_blank ng-href="{{imgs[curIdx].perm}}">{{imgs[curIdx].title}}</a></h3>
-<p>Use 'space' or swipe the bottom of your screen to advance</p>
+<p>{{instructions}}</p>
 <div id="gallery"></div>
 <br><br><br>
-<div style="position:fixed;height:10000px;width:2000px;top:400px;left:0px;"
-ng-swipe-right="prev()" ng-swipe-left="next()"></div>
+<div id='fixer'></div>
+
 <style>
 h3 a {
   color:#444
