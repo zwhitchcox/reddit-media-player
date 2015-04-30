@@ -18,16 +18,15 @@
   </style>
   <title>Reddit Player</title>
   <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-41646350-9', 'auto');
-  ga('send', 'pageview');
+    ga('create', 'UA-41646350-9', 'auto');
+    ga('send', 'pageview');
 
-  </script>
-  <!-- SCROLLS -->
+  </script>  <!-- SCROLLS -->
   <!-- load bootstrap and fontawesome via CDN -->
   <!-- load bootstrap and fontawesome via CDN -->
   <link rel="stylesheet" href="lib/bootstrap-3.3.4-dist/css/bootstrap.min.css" />
@@ -77,6 +76,7 @@
         <li ng-repeat="btn in menu.btns"><a class="link" ng-click="btn.fn()"><i ng-class="'glyphicon glyphicon-'+btn.btnName"></i></a></li>
         <li ng-repeat="btn in menu.txtBtns"><a class="link" ng-click="ytonly(btn.fn)">{{btn.txt}}</a></li>
         <li><a class="link" ng-click="clearCache()">Clear Cache</a></li>
+        <li><a class="link" href="https://play.google.com/store/apps/details?id=com.zane.mpfr">Android App</a></li>
         </ul>
       </div>
     </div><!--/.container-fluid -->
