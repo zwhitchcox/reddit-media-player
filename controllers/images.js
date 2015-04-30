@@ -48,16 +48,19 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compi
           }
           return prev
         },[])
+        console.log('hello')
         $scope.play(0)
       })
     $scope.play = function(idx) {
+      console.log('play')
       if (idx === undefined) {
         $scope.curIdx++
       } else {
         $scope.curIdx = idx
       }
-      $('#gallery').css('margin-left','0')
+      console.log('hello')
       var cur = $scope.imgs[$scope.curIdx]
+      console.log(cur.id)
       addIDToStorage(cur.id, $scope.sub)
       if (cur.type === 'img') {
         $('#gallery').html('<img id="curimg" src="'+cur.uri+'">')
