@@ -60,14 +60,14 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compi
       addIDToStorage(cur.id, $scope.sub)
       if (cur.type === 'img') {
         $('#gallery').html('<img id="curimg" src="'+cur.uri+'">')
-        $('#curimg').css('max-width',window.innerWidth*.9)
+        $('#curimg').css('max-width','100%')
       } else if (cur.type==='imgur-embed') {
         $('#gallery').html('<blockquote class="imgur-embed-pub" lang="en" data-id="'
         +cur.hash+'"></blockquote><script async src="http://s.imgur.com/min/embed.js" charset="utf-8"></script>')
         document.getElementsByTagName('iframe')[0].style.zIndex= -1000
       } else if (cur.type === 'webm') {
         $('#gallery').html(
-          '<video autoplay="true" onclick="goToNext()" loop="true" webkit-playsinline src="'+cur.mp4uri+'" width="'+window.innerWidth*.85+'">'+
+          '<video autoplay="true" onclick="goToNext()" loop="true" webkit-playsinline src="'+cur.mp4uri+'" width="100%">'+
           '<source src="'+cur.webmuri+'" type="video/webm">'+
           '<source src="'+cur.mp4uri+'" type="video/mp4"></video>')
       }

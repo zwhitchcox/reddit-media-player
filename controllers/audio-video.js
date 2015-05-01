@@ -114,13 +114,14 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
             $scope.play()
           }
         })
-        document.getElementById('vimeo_player').width= window.innerWidth * .9
-        document.getElementById('vimeo_player').height= window.innerWidth * 0.609375 * .9
-        window.onresize = function() {
-          document.getElementById('vimeo_player').width= window.innerWidth * .9
-          document.getElementById('vimeo_player').height= window.innerWidth * 0.609375 * .9
-
+        setSize()
+        function setSize() {
+          var width = $('.list-group-item').outerWidth(),
+            vimEl = document.getElementById('vimeo_player');
+          vimEl.width= width
+          vimEl.height= width * 0.609375
         }
+        window.onresize = setSize
       }
       // youtube
       else if (cur.type ==='yt') {
