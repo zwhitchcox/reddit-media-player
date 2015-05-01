@@ -163,9 +163,12 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
             'onError': $scope.next
           }
         })
-        window.onresize = function() {
-          player.setSize(window.innerWidth * .9,window.innerWidth * 0.609375 * .9)
+        setSize()
+        function setSize() {
+          var width = $('.list-group-item').outerWidth()
+          player.setSize(width,width * 0.609375)
         }
+        window.onresize = setSize
       }
     }
   }])
