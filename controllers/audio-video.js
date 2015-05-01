@@ -4,6 +4,7 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
     document.addEventListener("pause", function() {window.location = '/'}, false);
 
     $scope.updateMenu = function() {
+
       Menu.txtBtns = [
         {txt: 'YouTube Only', fn: $scope.filterMedia}
       ]
@@ -153,7 +154,8 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
         }
         $('#stage').append("<div id='ytplayer'></div>")
         player = new YT.Player('ytplayer', {
-          width: '100%',
+          height: window.innerWidth * 0.609375 * .7,
+          width: window.innerWidth * .7,
           videoId: $scope.media[$scope.curIdx].ytid,
           events: {
             'onReady': onPlayerReady,
@@ -161,6 +163,9 @@ app.controller('AudVidCtrl', ['$scope', '$http', '$routeParams', 'Menu',
             'onError': $scope.next
           }
         })
+        window.onresize = function() {
+          player.setSize(window.innerWidth * .9,window.innerWidth * 0.609375 * .9)
+        }
       }
     }
   }])

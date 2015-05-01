@@ -31,7 +31,6 @@ app.controller('Ctrl', ['$scope', '$http', '$routeParams', 'Menu',
       return subs
     }
     $scope.custsubs = getSubsFromStorage()
-    console.log($scope.custsubs)
     $scope.subs = {
       audvid: [
         'Videos',
