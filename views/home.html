@@ -1,27 +1,32 @@
 <h1>Reddit Media Player</h1>
-<h3>Main</h3>
-<div class="list-group">
-  <a ng-repeat="sub in subs.images" ng-href="#/img/{{sub}}" class="list-group-item col-md-4 col-xs-6">
-  {{sub}}
-  </a>
-  <a ng-repeat="sub in subs.audvid" ng-href="#/audvid/{{sub}}" class="list-group-item col-md-4 col-xs-6">
-  {{sub}}
-  </a>
-  <a ng-repeat="sub in subs.comments" ng-href="#/com/{{sub}}" class="list-group-item col-md-4 col-xs-6">
-  {{sub}}
-  </a>
-  <a ng-repeat="sub in subs.text" ng-href="#/txt/{{sub}}" class="list-group-item col-md-4 col-xs-6">
-  {{sub}}
-  </a>
-</div>
-<br style="clear:both">
-<br><br>
+<div ng-show="custsubs.length!==0">
 <h3>Custom</h3>
 <div class="list-group">
   <a ng-repeat="sub in custsubs" ng-href="#/{{sub.type}}/{{sub.sub}}" class="list-group-item col-md-4 col-xs-6">
   {{sub.sub}}
   </a>
+  <br><br>
 </div>
+</div>
+<h3>Main</h3>
+<div class="list-group">
+  <a ng-repeat="sub in subs.images" ng-href="#/img/{{sub}}" class="list-group-item list-group-item-info col-md-4 col-xs-6">
+  {{sub}}
+  </a>
+  <a ng-repeat="sub in subs.audvid" ng-href="#/audvid/{{sub}}" class="list-group-item list-group-item-success col-md-4 col-xs-6">
+  {{sub}}
+  </a>
+  <a ng-repeat="sub in subs.comments" ng-href="#/com/{{sub}}" class="list-group-item list-group-item-danger col-md-4 col-xs-6">
+  {{sub}}
+  </a>
+  <a ng-repeat="sub in subs.text" ng-href="#/txt/{{sub}}" class="list-group-item list-group-item-warning col-md-4 col-xs-6">
+  {{sub}}
+  </a>
+  <a href="#/cust" class="list-group-item col-md-4 col-xs-6 list-group-item ">Custom</a>
+</div>
+<br style="clear:both">
+<br>
+
 
 <br style="clear:both"><br>
-<a href="#/cust" class="btn btn-success">Create</a>
+<a href="#/cust" class="btn btn-success">Custom</a>
