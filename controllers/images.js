@@ -3,58 +3,73 @@
 app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compile',
   function($scope, $http, $routeParams, Menu, $compile) {
     $scope.sub = $routeParams.sub
-    $http.jsonp('http://www.reddit.com/r/'+$scope.sub+'.json?limit=100&jsonp=JSON_CALLBACK')
-      .success(function(res) {
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-          $('#fixer').append($compile('<div style="position:fixed;height:10000px;width:2000px;top:400px;left:0px;" ng-swipe-right="prev()" ng-swipe-left="next()"></div>')($scope))
-          $scope.instructions = 'swipe to advance'
-        } else {
-          $scope.instructions = 'Use \'space\' to advance'
-        }
-        var ids = getIDsFromStorage($scope.sub)
-        var fileTypes = [".jpg", ".jpeg", ".bmp", ".gif", ".png"]
-        $scope.imgs = res.data.children.reduce(function(prev,cur) {
-          var origl = prev.length
-          if (!~ids.indexOf(cur.data.id)) {
-            if (cur.data.domain === 'imgur.com') {
-              var hash = cur.data.url.substr(cur.data.url.indexOf('/',8)+1)
-              prev.push({
-                type:'imgur-embed',
-                hash:hash,
-                title:cur.data.title,
-                perm: 'http://reddit.com'+cur.data.permalink,
-                id: cur.data.id
-              })
-            } else if (~fileTypes.indexOf(cur.data.url.substr(cur.data.url.length-4))) {
-              prev.push({type:'img',
-              uri:cur.data.url,
-              title:cur.data.title,
-              perm: 'http://reddit.com'+cur.data.permalink,
-              id: cur.data.id
-            })
-            } else if (
-              cur.data.url.substr(cur.data.url.length-5)==='.gifv' ||
-              cur.data.url.substr(cur.data.url.length-5)==='.webm'
-              ){
-              prev.push({
-                type:'webm',
-                mp4uri:cur.data.url.replace('gifv','mp4'),
-                webmuri:cur.data.url.replace('gifv','webm'),
-                title:cur.data.title,
-                perm: 'http://reddit.com'+cur.data.permalink,
-                id: cur.data.id
-              })
-            }
+    $scope.getMedia = function() {
+      var url = 'http://www.reddit.com/r/'+$scope.sub+'.json?limit=100&jsonp=JSON_CALLBACK'
+      if ($scope.getNext === true) {
+        url += '&after=' + $scope.last
+        $scope.getNext = false
+      }
+
+      $http.jsonp(url)
+        .success(function(res) {
+          if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            $('#fixer').append($compile('<div style="position:fixed;height:10000px;width:2000px;top:400px;left:0px;" ng-swipe-right="prev()" ng-swipe-left="next()"></div>')($scope))
+            $scope.instructions = 'swipe to advance'
+          } else {
+            $scope.instructions = 'Use \'space\' to advance'
           }
-          return prev
-        },[])
-        $scope.play(0)
-      })
+          var ids = getIDsFromStorage($scope.sub)
+          var fileTypes = [".jpg", ".jpeg", ".bmp", ".gif", ".png"]
+          $scope.imgs = res.data.children.reduce(function(prev,cur,idx) {
+            var origl = prev.length
+            if (!~ids.indexOf(cur.data.id)) {
+              if (cur.data.domain === 'imgur.com') {
+                var hash = cur.data.url.substr(cur.data.url.indexOf('/',8)+1)
+                prev.push({
+                  type:'imgur-embed',
+                  hash:hash,
+                  title:cur.data.title,
+                  perm: 'http://reddit.com'+cur.data.permalink,
+                  id: cur.data.id
+                })
+              } else if (~fileTypes.indexOf(cur.data.url.substr(cur.data.url.length-4))) {
+                prev.push({type:'img',
+                uri:cur.data.url,
+                title:cur.data.title,
+                perm: 'http://reddit.com'+cur.data.permalink,
+                id: cur.data.id
+              })
+              } else if (
+                cur.data.url.substr(cur.data.url.length-5)==='.gifv' ||
+                cur.data.url.substr(cur.data.url.length-5)==='.webm'
+                ){
+                prev.push({
+                  type:'webm',
+                  mp4uri:cur.data.url.replace('gifv','mp4'),
+                  webmuri:cur.data.url.replace('gifv','webm'),
+                  title:cur.data.title,
+                  perm: 'http://reddit.com'+cur.data.permalink,
+                  id: cur.data.id
+                })
+              }
+            }
+            return prev
+          },[])
+          $scope.last = res.data.children[res.data.children.length-1].data.name
+          $scope.play(0)
+        })
+
+    }
+    $scope.getMedia()
     $scope.play = function(idx) {
       if (idx === undefined) {
         $scope.curIdx++
       } else {
         $scope.curIdx = idx
+      }
+      if ($scope.curIdx === $scope.imgs.length) {
+        $scope.getNext = true
+        $scope.getMedia()
       }
       var cur = $scope.imgs[$scope.curIdx]
       addIDToStorage(cur.id, $scope.sub)
