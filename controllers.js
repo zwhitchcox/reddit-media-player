@@ -58,7 +58,13 @@ app.controller('Ctrl', ['$scope', '$http', '$routeParams', 'Menu',
        $scope.$apply($scope.omitRedundancies = state)
     })
   }])
-
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+  $('.ad').css({
+      'position':'fixed',
+      'bottom':'0',
+      'width':'100%'
+    })
+  }
 
 
 function apitts(txt,cb) {
