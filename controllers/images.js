@@ -12,6 +12,7 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compi
 
       $http.jsonp(url)
         .success(function(res) {
+          console.log(res)
           if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
             $('#fixer').append($compile('<div style="position:fixed;height:10000px;width:2000px;top:400px;left:0px;" ng-swipe-right="prev()" ng-swipe-left="next()"></div>')($scope))
             $scope.instructions = 'swipe to advance'

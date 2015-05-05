@@ -26,6 +26,10 @@ app.config(['$routeProvider',
       templateUrl: 'views/custom.html',
       controller: 'CustomCtrl'
     }).
+    when('/all', {
+      templateUrl: 'views/all.html',
+      controller: 'AllCtrl'
+    }).
     otherwise({
       redirectTo: '/'
     })
