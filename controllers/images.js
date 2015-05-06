@@ -75,7 +75,7 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compi
       addIDToStorage(cur.id, $scope.sub)
       if (cur.type === 'img') {
         $('#gallery').html('<img id="curImg" src="'+cur.uri+'">')
-        $('#curImg').css('max-width','700px')
+        $scope.resetWidth()
       } else if (cur.type==='imgur-embed') {
         $('#gallery').html('<blockquote class="imgur-embed-pub" lang="en" data-id="'
         +cur.hash+'"></blockquote><script async src="http://s.imgur.com/min/embed.js" charset="utf-8"></script>')
@@ -104,14 +104,13 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compi
     $scope.full = false
 
     $scope.resetWidth = function() {
-      console.log($scope.full)
       var width;
       if ($('.container').width()>700 && !$scope.full) {
         width = '700'
       } else{
         width = $('.container').width()
       }
-      $('#curImg').width(width)
+      $('#curImg').css({'max-width':width,'width':width})
     }
     window.onresize = $scope.resetWidth
     $scope.toggleFull = function() {
