@@ -12,7 +12,6 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compi
 
       $http.jsonp(url)
         .success(function(res) {
-          console.log(res)
           if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
             $('#fixer').append($compile('<div style="position:fixed;height:10000px;width:2000px;top:400px;left:0px;" ng-swipe-right="prev()" ng-swipe-left="next()"></div>')($scope))
             $scope.instructions = 'swipe to advance'
@@ -76,14 +75,21 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compi
       addIDToStorage(cur.id, $scope.sub)
       if (cur.type === 'img') {
         $('#gallery').html('<img id="curimg" src="'+cur.uri+'">')
-        $('#curimg').css('max-width','100%')
+        $('#curimg').css('max-width','700px')
       } else if (cur.type==='imgur-embed') {
         $('#gallery').html('<blockquote class="imgur-embed-pub" lang="en" data-id="'
         +cur.hash+'"></blockquote><script async src="http://s.imgur.com/min/embed.js" charset="utf-8"></script>')
         document.getElementsByTagName('iframe')[0].style.zIndex= -1000
       } else if (cur.type === 'webm') {
+        var width;
+        if ($('.container').width()>700) {
+          width = '700'
+        } else{
+          width = '100%'
+        }
         $('#gallery').html(
-          '<video autoplay="true" onclick="goToNext()" loop="true" webkit-playsinline src="'+cur.mp4uri+'" width="100%">'+
+
+          '<video autoplay="true" onclick="goToNext()" loop="true" webkit-playsinline id="curImg" src="'+cur.mp4uri+'" width="'+width+'">'+
           '<source src="'+cur.webmuri+'" type="video/webm">'+
           '<source src="'+cur.mp4uri+'" type="video/mp4"></video>')
       }
@@ -94,6 +100,17 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compi
     }
     $scope.prev = function() {
       $scope.play($scope.curIdx-1)
+    }
+    window.onresize = resetWidth
+    function resetWidth() {
+      var width;
+      console.log($('.container').width())
+      if ($('.container').width()>700) {
+        width = '700'
+      } else{
+        width = '100%'
+      }
+      $('#curImg').width = width
     }
     Menu.btns =  [
       {btnName: 'backward', fn: $scope.prev},
