@@ -74,15 +74,15 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compi
       var cur = $scope.imgs[$scope.curIdx]
       addIDToStorage(cur.id, $scope.sub)
       if (cur.type === 'img') {
-        $('#gallery').html('<img id="curimg" src="'+cur.uri+'">')
-        $('#curimg').css('max-width','700px')
+        $('#gallery').html('<img id="curImg" src="'+cur.uri+'">')
+        $('#curImg').css('max-width','700px')
       } else if (cur.type==='imgur-embed') {
         $('#gallery').html('<blockquote class="imgur-embed-pub" lang="en" data-id="'
         +cur.hash+'"></blockquote><script async src="http://s.imgur.com/min/embed.js" charset="utf-8"></script>')
         document.getElementsByTagName('iframe')[0].style.zIndex= -1000
       } else if (cur.type === 'webm') {
         var width;
-        if ($('.container').width()>700) {
+        if ($('.container').width()>700 && !$scope.full) {
           width = '700'
         } else{
           width = '100%'
@@ -101,21 +101,27 @@ app.controller('ImagesCtrl', ['$scope', '$http', '$routeParams', 'Menu', '$compi
     $scope.prev = function() {
       $scope.play($scope.curIdx-1)
     }
-    window.onresize = resetWidth
-    function resetWidth() {
+    $scope.full = false
+
+    $scope.resetWidth = function() {
+      console.log($scope.full)
       var width;
-      console.log($('.container').width())
-      if ($('.container').width()>700) {
+      if ($('.container').width()>700 && !$scope.full) {
         width = '700'
       } else{
-        width = '100%'
+        width = $('.container').width()
       }
-      $('#curImg').width = width
+      $('#curImg').width(width)
+    }
+    window.onresize = $scope.resetWidth
+    $scope.toggleFull = function() {
+      $scope.full = !$scope.full
+      $scope.resetWidth()
     }
     Menu.btns =  [
       {btnName: 'backward', fn: $scope.prev},
-      {btnName: 'forward', fn: $scope.next}
-
+      {btnName: 'forward', fn: $scope.next},
+      {btnName: 'resize-full', fn: $scope.toggleFull}
       ]
     window.onkeydown = function (event) {
       if (event.which === 32) {
